@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/styles.css">
+    <title>Schedule</title>
+</head>
+<body>
+    {% if user_schedule %}
+    <h2>Your Generated Workout Schedule</h2>
+    <ul>
+        {% for day, exercises in user_schedule.items() %}
+        <li>
+            <h3>{{ day }}</h3>
+            <ul>
+                {% for exercise in exercises %}
+                <li>
+                    <strong>Exercise:</strong> {{ exercise['Title'] }}<br>
+                    <strong>Description:</strong> {{ exercise['Desc'] }}<br>
+                    <strong>Type:</strong> {{ exercise['Type'] }}<br>
+                    <strong>Body Part:</strong> {{ exercise['BodyPart'] }}<br>
+                    <strong>Equipment:</strong> {{ exercise['Equipment'] }}<br>
+                    <strong>Sets:</strong> {{ exercise['Sets'] }}<br>
+                    <strong>Reps per Set:</strong> {{ exercise['Reps per Set'] }}<br>
+                    
+                    {% if exercise_images[exercise['Title']] %}
+                    <img src="{{ exercise_images[exercise['Title']][0] }}" alt="{{ exercise['Title'] }}" style="width:200px;height:auto;">
+                    {% endif %}                    
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

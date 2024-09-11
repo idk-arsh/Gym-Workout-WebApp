@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/styles.css">
+    <title>Your ISU Workout Planner</title>
+</head>
+<body>
+    <h1>Enter Your Information</h1>
+    <form method="post">
+        <label for="weight">Enter your Weight</label>
+        <input type="number" name="weight" id="weight" placeholder="Your weight (in lb)" required/><br>
+
+        <label for="height">Enter your Height</label>
+        <input type="number" name="height" id="height" placeholder="Your height (in cm)" required/><br>
+        
+        <label for="goal">Goal</label>
+        <select name="goal" id="goal">
+            <option value="Fat Loss">Fat Loss</option>
+            <option value="Muscle Gain">Muscle Gain</option>
+            <option value="General Fitness">General Fitness</option>
+        </select><br>
+        
+        <label for="group_size">How many muscle groups to focus on per day</label>
+        <select name="group_size" id="group_size">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select><br>
+
+        <label for="days">Number of days in a week you want to workout</label>
+        <select name="days" id="days">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select><br>
+
+        <label for="w_days">Number of gym exercises in a day</label>
+        <select name="w_days" id="w_days">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select><br>
+
+        <button type="submit">
+            Submit
+        </button>
+    </form>
+</body>
+</html>
