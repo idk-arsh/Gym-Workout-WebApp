@@ -28,43 +28,31 @@ class ExerciseScheduler:
 
     def generate_muscle_specific_schedule(self, days=7, num_exercises_per_day=10, intensity=None, goal=None, group_size=3):
         weekly_schedule = {}
-
-        # Generate muscle combinations based on user-provided group size
         muscle_combinations = self.generate_random_combinations(num_combinations=days, combination_size=group_size, avoid_repetition=True)
 
         for day, muscle_group in enumerate(muscle_combinations, 1):
-            # Filter exercises based on muscle group, intensity, and goal
             body_part_exercises = self._filter_exercises_for_body_part(muscle_group, intensity, goal)
 
             num_available_exercises = len(body_part_exercises)
 
             if num_available_exercises == 0:
                 print(f"No exercises available for {muscle_group} with intensity {intensity} and goal {goal}.")
-                body_part_exercises = self._fallback_exercises(muscle_group)  # Fallback to all exercises for the muscle group
-
-            # If fewer exercises are available, return all available exercises for that day
+                body_part_exercises = self._fallback_exercises(muscle_group) 
             num_exercises_to_sample = min(num_available_exercises, num_exercises_per_day)
 
             if num_exercises_to_sample == 0:
                 print(f"Still no exercises available for {muscle_group}. Skipping this day.")
-                continue  # Skip the day if absolutely no exercises are available
-
-            # Sample exercises (or take all available exercises if less than requested)
+                continue  
             daily_exercises = self._sample_by_rating(body_part_exercises, num_exercises_to_sample)
-
-            # Add the exercises for the day to the weekly schedule
             weekly_schedule[f'Day {day} - Focus: {", ".join(muscle_group)}'] = daily_exercises[['Title', 'Desc', 'Type', 'BodyPart', 'Equipment', 'Level', 'Sets', 'Reps per Set']].to_dict(orient='records')
 
         return weekly_schedule
 
     def _filter_exercises_for_body_part(self, muscle_group, intensity, goal):
         filtered_exercises = self.exercises_df[self.exercises_df['BodyPart'].isin(muscle_group)]
-
-        # Apply intensity filter if provided
         if intensity:
             filtered_exercises = filtered_exercises[filtered_exercises['Level'] == intensity]
 
-        # Apply goal filter if provided
         if goal:
             filtered_exercises = filtered_exercises[filtered_exercises['Goal'] == goal]
 
