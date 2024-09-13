@@ -8,15 +8,13 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Load exercise data
 exercises_df = pd.read_csv('./data2.csv')
 scheduler = ExerciseScheduler(exercises_df)
 
 def fetch_images(query):
     api_key = os.getenv('API_KEY')
     search_engine_id = '239678cd7653547b1'
-    
-    # Construct the search URL
+
     url = f'https://www.googleapis.com/customsearch/v1'
     
     params = {
@@ -24,18 +22,17 @@ def fetch_images(query):
         'cx': search_engine_id,
         'searchType': 'image',
         'key': api_key,
-        'num': 5,  # Number of results you want (max is 10)
-        'fileType': 'gif',  # Fetch GIFs only
-        'imgType': 'animated'  # Fetch animated images (GIFs)
+        'num': 5, 
+        'fileType': 'gif',  
+        'imgType': 'animated'  
     }
     
     response = requests.get(url, params=params)
     results = response.json()
-    
-    # Print out the full response to debug
+
     print(results)
     
-    # Extract image URLs (GIFs)
+
     image_urls = []
     if 'items' in results:
         for item in results['items']:
@@ -59,8 +56,7 @@ def index():
         for exercises in user_schedule.values(): 
             for exercise in exercises:
                 exercise_names.append(exercise['Title']) 
-        
-        # Fetch images for each exercise
+
         exercise_images = {name: fetch_images(name) for name in exercise_names}
         
         return render_template('result.html', user_schedule=user_schedule, exercise_images=exercise_images)
